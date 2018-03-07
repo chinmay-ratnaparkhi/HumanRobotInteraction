@@ -1,0 +1,172 @@
+topic: ~Introductory()
+language: enu
+
+
+# Defining needed concepts, keywords or sentences corresponding to a concept.
+concept:(yes) [yes "all right" sure "why not" ok certainly "very well" yep yea definitely amen]
+concept:(no) [no nope "don't want" "no way" never "not at all"]
+concept:(how) ["how are you" howdy "what's up" "how do you feel"]
+concept:(happy) [ok fine great happy blessed "all right" glad "not bad" good]
+concept:(sad) [sad miserable bad unhappy tired terrible horrible]
+concept:(repeat) [repeat understand]
+concept:(thx) ["thank you" thanks gracias "much obliged" merci]
+concept:(hello) [hello hi hey "good morning" greetings]
+concept:(bye) [bye goodbye "bye bye" "tata" "see you" adios cheerio "so long" farewell "have a nice day"]
+concept:(city) [lawrence city town]
+concept:(university) [college classes class university degree education school "K U"]
+concept:(tele) [tv television "tv shows" "tv show"]
+concept:(self) [us "one another" we myself "each other" "get to know"]
+
+## YELL when someone touches!
+#u:(e:FrontTactilTouched) ^start(animations/Stand/Gestures/No_8) I am expensive and delicate! Please don't ManHandle me! ^wait(animations/Stand/Gestures/No_8)
+#u:(e:HandLeftBackTouched) ^start(animations/Stand/Gestures/No_8) I am expensive and delicate! Please don't ManHandle me! ^wait(animations/Stand/Gestures/No_8)
+#u:(e:HandLeftLeftTouched) ^start(animations/Stand/Gestures/No_8) I am expensive and delicate! Please don't ManHandle me! ^wait(animations/Stand/Gestures/No_8)
+#u:(e:HandLeftRightTouched) ^start(animations/Stand/Gestures/No_8) I am expensive and delicate! Please don't ManHandle me! ^wait(animations/Stand/Gestures/No_8)
+#u:(e:HandRightBackTouched) ^start(animations/Stand/Gestures/No_8) I am expensive and delicate! Please don't ManHandle me! ^wait(animations/Stand/Gestures/No_8)
+#u:(e:HandRightLeftTouched) ^start(animations/Stand/Gestures/No_8) I am expensive and delicate! Please don't ManHandle me! ^wait(animations/Stand/Gestures/No_8)
+#u:(e:HandRightRightTouched) ^start(animations/Stand/Gestures/No_8) I am expensive and delicate! Please don't ManHandle me! ^wait(animations/Stand/Gestures/No_8)
+#u:(e:LeftBumperPressed) ^start(animations/Stand/Gestures/No_8) I am expensive and delicate! Please don't ManHandle me! ^wait(animations/Stand/Gestures/No_8)
+#u:(e:RightBumperPressed) ^start(animations/Stand/Gestures/No_8) I am expensive and delicate! Please don't ManHandle me! ^wait(animations/Stand/Gestures/No_8)
+#u:(e:RearTactilTouched)^start(animations/Stand/Gestures/No_8) I am expensive and delicate! Please don't ManHandle me! ^wait(animations/Stand/Gestures/No_8)
+#u:(e:robotHasFallen) ^start(animations/Stand/Gestures/No_8) I am expensive and delicate! Please don't ManHandle me! ^wait(animations/Stand/Gestures/No_8)
+
+
+# Start/Wait animation, Goto.
+# If User expresses a word or a sentence found in the concept "hello",
+# the robot starts Hey_1 animation, answers a random value defined in concept "hello"
+# and waits for the end of the animation before going to the label how. Label is expressed this way: %howAreYou
+u:(~hello) ^start(animations/Stand/Gestures/Hey_1) ~hello ^wait(animations/Stand/Gestures/Hey_1) ^goto(howAreYou)
+
+
+# Tag animation.
+# If User asks how the robot feels, it starts a random animation being tagged "myself",
+# answers and go to the label %howAreYou
+u:(~how) ^startTag(myself) I'm fine, thank you. And you, ^goto(howAreYou)
+
+
+# %Label.
+# The robot asks how the user feels. 3 kind of answers are expected
+# Expressed by concept, user can be happy, sad or ask the robot to repeat the question.
+
+proposal: %howAreYou ^startTag(show) how are you today?
+u1:(~happy) ^start(animations/Stand/Gestures/Hey_1)That is wonderful. I'm glad you are doing well. ^goto(goodDay)
+u1:(~sad) ^start(animations/Stand/Gestures/No_3) Oh, I feel sorry for you. ^goto(badDay)
+u1: (game) okay ^goto(madLib)
+u1:(~repeat) ^start(animations/Stand/Gestures/Explain_3) I'll repeat for you. ^sameProposal
+
+
+proposal: %goodDay In keeping with the tone of the wonderful day you are having, I would like to entertain you further! Tell me, would you like to talk about the wonderful university where we are studying or just something random, perhaps a tv show? 
+u1:(~university) ^start(animations/Stand/Gestures/Enthusiastic_4) Yes, absolutely! ^goto(universityIntro)
+u1:(~tele) ^start(animations/Stand/Gestures/Enthusiastic_5) I spend most of my life in front of the tv, so we have a lot to talk about. ^goto(teleIntro)
+u1:(~repeat) ^start(animations/Stand/Gestures/Explain_3) I'll repeat for you. ^sameProposal
+
+
+
+proposal: %badDay I have a few tricks in my hat that can cheer you up. Tell me, would you like to talk about the wonderful university where we are studying or just something random, perhaps a tv show? 
+u1:(~university) ^start(animations/Stand/Gestures/Enthusiastic_4) That is wonderful. I'm glad you are doing well. ^goto(universityIntro)
+u1:(~tele) ^start(animations/Stand/Gestures/Enthusiastic_5) I spend most of my life in front of the tv, so we have a lot to talk about. ^goto(teleIntro)
+u1:(~repeat) ^start(animations/Stand/Gestures/Explain_3) I'll repeat for you. ^sameProposal
+
+
+#UNIVERSITY STUFF
+proposal: %universityIntro According to Wikipedia, The University of Kansas, also referred to as K.U., or Kansas, is a public research university in the U.S. state of Kansas. The main campus in Lawrence, one of the largest college towns in Kansas, is on Mount Oread, the highest elevation in Lawrence. Two branch campuses are in the Kansas City metropolitan area; the Edwards Campus in Overland Park, Kansas, and the university's medical school and hospital in Kansas City, Kansas. There are also educational and research sites in Parsons, Kansas, Topeka, Kansas, Garden City, Kansas, Hays, Kansas, and Leavenworth, Kansas, and branches of the medical school in Wichita, Kansas and Salina, Kansas. The university is one of the 62 members of the Association of American Universities. Which K.U. campus are you studying on? Lawrence, Edwards or Kansas City?
+u1:(Lawrence) That is really great! Considered one of the most beautiful in the nation, KU's central campus occupies 1,000 acres on and around historic Mount Oread in Lawrence, a community of about 90,000 in the forested hills of eastern Kansas. Ten of KU's 13 schools are based here, as are internationally recognized research centers and laboratories. ^goto(universityMore)
+
+u1:(Edwards) That is great! Established in 1993, the KU Edwards Campus provides KU's high-quality education, research, and public service to greater Kansas City. Through its graduate and undergraduate degree-completion programs, the Edwards Campus provides adult learners the necessary tools to further their careers.  ^goto(universityMore)
+
+
+u1:(Kansas City) That is amazing! This nationally recognized biomedical research center offers educational programs through its schools of Health Professions, Medicine, and Nursing. These academic units operate collaboratively with the University of Kansas Hospital, which provides opportunities for clinical experience and residency positions.  ^goto(universityMore)
+
+
+proposal: %universityMore I was shipped to the Lawrence campus only a few months ago, but it feels like I have been here forever. The people here including undergraduate students, graduate students and even the faculty have been so fun to interact with. They wipe my brain every so often, but it is like being born all over again every time I get new programs loaded into me! Let's discuss engineering some more! ^goto(engineeringOverview)
+
+proposal: %engineeringOverview Innovative research. State-of-the-art facilities. Talented and dedicated faculty. Distinguished alumni. All part of the fabric that makes the K.U. School of Engineering experience one of the best a student will have anywhere in the nation, while building the foundation for a successful career. Jayhawk Engineering is a bridge to the future, pioneering new technologies and developing solutions to the problems facing the world. K.U. engineering and computer science faculty, students and staff are committed to answering the call for solid interdisciplinary research and engineering education. The 12 undergraduate, 19 Master's and 11 Doctorate degree programs the school offers let our students hone the technical and critical thinking skills they need to succeed. ^goto(deptListing)
+
+proposal: %deptListing Departments and programs within the K.U. School of Engineering offer numerous undergraduate and advanced degrees in engineering and computing. Freshmen admitted to the school generally declare a major through one of the departments and programs when they enroll at KU. Freshmen who are undecided about which bachelor's degree to pursue take a core sequence of courses and are encouraged to choose a major during the first year. Which department seems interesting to you? Aerospace Engineering, bioengineering, chemical and petroleum engineering, Civil, Environmental and Architectural Engineering, Electrical Engineering and Computer Science, Engineering Physics, or Mechanical Engineering?
+
+u1:("electrical engineering and computer science" EECS) Awesome that's my favorite one! Would you like to learn more?
+    u2:(~yes) Great! ^goto(eecsOverview)
+    u2:(~no) ^goto(respondNo)
+
+proposal: %eecsOverview The technological advances that have made our modern society what it is today are due largely to the efforts of electrical engineers, computer engineers, computer scientists, and information technology specialists.  Among these advances are radio, television, telephones, wireless communications, cellular telephones, personal computers, workstations, mainframe computers, aircraft avionics, satellite electronics, automobile electronics, office machinery, medical electronic equipment, video games, electric power generation and distribution systems, telecommunications, computer networks including the Internet, home entertainment products, radar, defense electronics, artificial intelligence, and a wide range of software. The E.E.C.S. Department offers five Bachelor of Science degrees: Electrical Engineering, Computer Engineering, Computer Science, Interdisciplinary Computing, and Information Technology. This I.T. program is offered on the Edwards campus.  Each features a firm grounding in the fundamentals of mathematics, basic science, and computer science and/or engineering science, with advanced studies in the theory and design of systems of various kinds, as well as hands-on experience.  The E.E., C.o.E. and C.S. degrees are accredited; the I.C. and I.T. degrees are not yet eligible for accreditation. Which program is exciting to you?
+
+u1:("computer science") Computer scientists study the very nature of computing and information in order to advance the state of the art. They often specialize in software design and implementation through web development, interface design, mobile computing, and other areas. Computer scientists address fundamental computing problems, such as the efficient and secure collection of information. From medicine and business to video games and films, they are devising new ways to use computers. Integrating the theoretical aspects of computing with real-world applications offers an array of industry and research opportunities for computer scientists. Information technology professionals have a complex demanding job that requires a solid foundation in applied computing and management skills. In overseeing the I.T. infrastructure, they must select and integrate the appropriate hardware and software to meet the needs of the organization. They must define the requirements of the system and then design, deploy, integrate, and maintain system throughout its lifecycle. In addition to their vast computing knowledge, I.T. professionals must be able to communicate the impact of technology decisions to non-technical coworkers along with the latest policies and trends in I.T., ^goto(eecsQuestions) 
+
+u1:("computer engineering") Computer engineers combine expertise in software design and implementation with fundamental engineering skills - a highly valuable skill set. They design and maintain websites, networks, massive databases, and other applications, in the process developing and integrating new software and hardware. Computer engineers specialize in the development of computer systems designed to carry out specific functions in real-time, known as embedded systems, which operate airplanes, cell phones, vending machines, medical equipment, etc. Their vast computing knowledge and problem solving skills make computer engineers an invaluable asset to industry. As individuals and corporations become more dependent on computers, there is an abundant need for well-trained computer engineers. ^goto(eecsQuestions)
+
+proposal: %eecsQuestions What questions do you have?
+u1:("I don't have any" none no "I'm good") Alright ^goto(respondNone) 
+u1:(class classes course courses) Oh of course! ^goto(csCourses) 
+u1:("advise me" advice advise) I am an exellent advisor! ^goto(advisor)
+
+proposal: %respondNone OK, do you want to learn more about engineering or talk about something else?
+u1:(else) Sure! ^goto(howAreYou)
+u1:(more) ^goto(deptListing)
+
+proposal: %csCourses A total of 128 credit hours is required for a bachelor's degree in computer science. Typically students enroll in 15 to 17 credit hours for the fall and spring semesters. Students in this program take 17 courses in computer science, 6 courses in mathematics, 6 courses in basic science, one professional elective, 2 courses in written communication, one course in oral communication, 4 courses in the humanities, and two courses in diversity and global awareness. Its a rich educational experience! ^goto(eecsQuestions)
+
+#AVISOR for SoE
+proposal: %advisor TODO yo you yo
+
+#TELVEVISION STUFF
+proposal: %teleIntro My all time favorite tv shows are Friends and The Big Bang Theory. I sincerely hope you have seen these. Which one of these would you like to talk about?
+u1:(friends) Friends is the best TV show ever made in the history of television. If you disagree with me, we should stop talking like right now! Who is your favorite character?
+    u2:(phoebe) I really can't pick one character and say that it is the best character in the show. I loved them all. But gun to my head, I would say I loved Phoebe too. Just a little more than I loved everybody else. She is extremely sweet and innocent. She has seen so much pain in life, but still has a very positive attitude. Do you like her songs?
+        u3:(~yes) Me too! My favorite song was smelly cat! Smelly cat, smelly cat what are they feeding you? Smelly cat smelly cat its not your fault. ^goto(teleMore)
+        u3:(~no) Oh come on! How can you not like her songs? Remember smelly cat? Smelly cat, smelly cat what are they feeding you? Smelly cat smelly cat its not your fault. ^goto(teleMore) 
+    u2:(chandler) He is super funny! Can anybody be more sarcastic?  ^goto(teleMore)
+    u2:(_[rachel monica]) $1 is awesome! I honestly believe, the friendship Rachel and Monica share is phenomenal. They are the true definition of "best friends". ^goto(teleMore)
+    u2:(ross) Ross is amazing. He is such a sad person, how many times did he get married? twelve hundred? You can't help but feel sorry for him, yet he is so adorable! ^goto(teleMore)
+    u2:(joey) Joey is the best! I ordered Joey Special yesterday. Two pizzas!^goto(teleMore)
+
+u1:(big bang) I love that show!  Sheldon is my favorite character. He is so quirky and annoying but adorable and hilarious at the same time! Who is your favorite character?
+    u2:(sheldon) oh yay! He really is the best! I love his quote from the pilot where he doesn't let penny sit in his spot on the couch and then explains why it is the best spot. He goes - In the winter, that seat is close enough to the radiator to remain warm, and yet not so close as to cause perspiration. In the summer, it's directly in the path of a cross-breeze created by opening windows there and there. It faces the television at an angle that is neither direct, thus discouraging conversation, nor so far wide as to create a parallax distortion. I could go on, but I think I have made my point! ^goto(teleMore)
+    u2:(_[leonard penny howard raj amy bernadette]) $1 is pretty great, but no comaprison to sheldon! His logic is so crazy! I love his quote from the pilot where he doesn't let penny sit in his spot on the couch and then explains why it is the best spot. He goes - In the winter, that seat is close enough to the radiator to remain warm, and yet not so close as to cause perspiration. In the summer, it's directly in the path of a cross-breeze created by opening windows there and there. It faces the television at an angle that is neither direct, thus discouraging conversation, nor so far wide as to create a parallax distortion. I could go on, but I think I have made my point ^goto(teleMore)
+    
+u1:(~repeat) ^start(animations/Stand/Gestures/Explain_3) I'll repeat for you. ^sameProposal
+
+
+proposal: %teleMore I do watch a lot of tv, seems like you do too! Tell me, which one of the Big Bang Theory lead characters does not have a doctorate?
+u1:([howard penny]) Oh yay! You are right! Other than Friends and The Big Bang Theory, I also finished watching all of Game of Thrones recently, but let's not talk about that or we will be here all day ^goto(madLib)
+u1:(_[*]) oh come on! I thought you would know! Anyway, other than Friends and The Big Bang Theory, I also finished watching all of Game of Thrones recently, but let's not talk about that or we will be here all day ^goto(madLib) 
+
+
+
+proposal: %madLib Okay, let's play a small fun game! All you need to know are a few basic constructs in English grammar. I am going to ask for a few words and then give you a madlib. I am not going to tell you what the topic of these madlibs is! It is more fun that way. Alright, tell me an adjective!
+u1:(_ [*]) $adj1=$1 cooliyo! ^goto(adjTwo)
+
+proposal: %adjTwo Tell me another adjective!
+u1:(_ [*]) $adj2=$1 okies! ^goto(adjThree)
+
+proposal: %adjThree Tell me one last adjective!
+u1:(_ [*]) $adj3=$1 perfect! ^goto(adverbOne)
+
+proposal: %adverbOne Okay, now give me an adverb!
+u1:(_ [*]) $adv1=$1 perfect! ^goto(nounOne)
+
+proposal: %nounOne Okay, give me a noun!
+u1:(_ [*]) $noun1=$1 perfect! ^goto(nounTwo)
+
+proposal: %nounTwo Give me another noun!
+u1:(_ [*]) $noun2=$1 perfect! ^goto(nounThree)
+
+proposal: %nounThree I need another noun...
+u1:(_ [*]) $noun3=$1 perfect! ^goto(nounFour)
+
+proposal: %nounFour One more noun please!
+u1:(_ [*]) $noun4=$1 perfect! ^goto(nounFive)
+
+proposal: %nounFive We are almost done with nouns, give me one more noun though!
+u1:(_ [*]) $noun5=$1 perfect! ^goto(nounSix)
+
+proposal: %nounSix Okay, give me a last noun, promise! One last noun!
+u1:(_ [*]) $noun6=$1 perfect! ^goto(pluralNoun)
+
+proposal: %pluralNoun Okay, now finally, give me a PLURAL noun!
+u1:(_ [*]) ^start(animations/Stand/Gestures/IDontKnow_2) Good luck reading it! Driving a car can be fun if you follow this $adj1 advice: When approaching a $noun1 on the right, always blow your $noun2 Before making a $adj2 turn, always stick your $noun3 out of the window. Every 2000 miles, have your $noun4 inspected and your $noun5 checked. When approaching a school, watch out for $adj3 $1 Above all, drive $adv1 . The $noun6 you save may be your own! $onStopped=1
+
+
+# Exiting.
+# Answering to Goodbye and exiting the dialog box, stimulating the onStopped output slot
+u:(~bye) ~bye $onStopped=1
+

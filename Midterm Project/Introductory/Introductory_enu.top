@@ -12,8 +12,10 @@ concept:(thx) ["thank you" thanks gracias "much obliged" merci]
 concept:(hello) [hello hi hey "good morning" greetings]
 concept:(bye) [bye goodbye "bye bye" "tata" "see you" adios cheerio "so long" farewell "have a nice day"]
 concept:(city) [lawrence city town]
-concept:(university) [college classes class university degree education school "K U"]
-concept:(tele) [tv television "tv shows" "tv show"]
+concept:(university) [college university degree education school "K U"]
+concept:(engineering) [school engineer engineering]
+concept:(class) [class classes major advice advising advisor fall spring]
+concept:(dance) [dance dancer bollywood music entertain entertainment]
 concept:(self) [us "one another" we myself "each other" "get to know"]
 
 ## YELL when someone touches!
@@ -40,42 +42,51 @@ u:(~hello) ^start(animations/Stand/Gestures/Hey_1) ~hello ^wait(animations/Stand
 # Tag animation.
 # If User asks how the robot feels, it starts a random animation being tagged "myself",
 # answers and go to the label %howAreYou
-u:(~how) ^startTag(myself) I'm fine, thank you. And you, ^goto(howAreYou)
+u:(~how) ^startTag(myself) I'm fine, thank you. How about you? ^goto(howAreYou)
 
 
-# %Label.
 # The robot asks how the user feels. 3 kind of answers are expected
 # Expressed by concept, user can be happy, sad or ask the robot to repeat the question.
-
-proposal: %howAreYou ^startTag(show) how are you today?
+proposal: %howAreYou ^startTag(show) How are you doing today?
 u1:(~happy) ^start(animations/Stand/Gestures/Hey_1)That is wonderful. In keeping with the tone of the wonderful day you are having, I would like to entertain you further! ^goto(topicSelection)
 u1:(~sad) ^start(animations/Stand/Gestures/No_3) Oh, I am sorry! I will try my best to cheer you up! ^goto(topicSelection)
 u1:(~repeat) ^start(animations/Stand/Gestures/Explain_3) I'll repeat for you. ^sameProposal
 
 
-proposal: %topicSelection Tell me, would you like to talk about the wonderful university where we are studying or just something random, perhaps a tv show? 
+
+# Pick a role for the robot. Based on a simple question the robot decides whether the user
+# wants university/department overview (greeter), specific acedemic details for engineering majors (advisor)
+# or just entertainment (dancer) 
+proposal: %topicSelection I can talk to you about the school of engineering at the university of Kansas, advice you on which classes you should take in the first year for various majors offered by the school of engineering or entertain you with a bollywood dance! Tell me, would you like to talk about the university, the school of engineering, classes required for various majors? Or do you just want to see me dance? 
 u1:(~university) ^start(animations/Stand/Gestures/Enthusiastic_4) Yes, absolutely! ^goto(universityIntro)
-u1:(~repeat) ^start(animations/Stand/Gestures/Explain_3) I'll repeat for you. ^sameProposal
+u1:(~engineering) 	Awesome! Let's talk about the school of engineering! ^goto(engineeringOverview)
+u1:(~class) 		This topic is not completely implemented. I will get back to you soon. ^goto(topicSelection)
+u1:(~dance)  		This topic is not completely implemented. I will get back to you soon. ^goto(topicSelection)
+u1:(~repeat) ^start(animations/Stand/Gestures/Explain_3) I'll repeat my question. ^sameProposal
 
 
 
-#UNIVERSITY STUFF
-proposal: %universityIntro According to Wikipedia, The University of Kansas, also referred to as K.U., or Kansas, is a public research university in the U.S. state of Kansas. The main campus in Lawrence, one of the largest college towns in Kansas, is on Mount Oread, the highest elevation in Lawrence. Two branch campuses are in the Kansas City metropolitan area; the Edwards Campus in Overland Park, Kansas, and the university's medical school and hospital in Kansas City, Kansas. There are also educational and research sites in Parsons, Kansas, Topeka, Kansas, Garden City, Kansas, Hays, Kansas, and Leavenworth, Kansas, and branches of the medical school in Wichita, Kansas and Salina, Kansas. The university is one of the 62 members of the Association of American Universities. Which K.U. campus are you studying on? Lawrence, Edwards or Kansas City?
-u1:(Lawrence) That is really great! Considered one of the most beautiful in the nation, KU's central campus occupies 1,000 acres on and around historic Mount Oread in Lawrence, a community of about 90,000 in the forested hills of eastern Kansas. Ten of KU's 13 schools are based here, as are internationally recognized research centers and laboratories. ^goto(universityMore)
+# Generic Intro Conversation 
+proposal: %universityIntro According to Wikipedia, The University of Kansas is a public research university in the state of Kansas. The main campus in Lawrence is one of the largest college towns in the state. It is located on Mount Oread, the highest elevation in the city of Lawrence. The Edwards Campus is located in Overland Park and the medical school and hospital is located in Kansas City. There are also educational and research sites in Parsons, Topeka, Leavenworth and Garden City. The university is one of the sixty two members of the Association of American Universities. Which campus are you studying on? Lawrence, Overland Park or Kansas City?
 
-u1:(Edwards) That is great! Established in 1993, the KU Edwards Campus provides KU's high-quality education, research, and public service to greater Kansas City. Through its graduate and undergraduate degree-completion programs, the Edwards Campus provides adult learners the necessary tools to further their careers.  ^goto(universityMore)
+u1:(Lawrence) That is really great! Considered one of the most beautiful in the nation, KU's central campus occupies one thousand acres on and around the historic Mount Oread in Lawrence. It is a community of about ninty thousand in the forested hills of eastern Kansas. Ten of the thirteen schools that belong to the university are based in Lawrence, including internationally recognized research centers and laboratories. ^goto(universityMore)
+
+u1:(Edwards) Great! Established in 1993, the Edwards Campus provides high-quality education, research, and public services. Through its graduate and undergraduate degree completion programs, the Edwards Campus provides adult learners the necessary tools to further their careers.  ^goto(universityMore)
+
+u1:(Kansas City) Wonderful! This nationally recognized biomedical research center offers educational programs through its schools of Health Professions, Medicine, and Nursing. These academic units operate collaboratively with the University Hospital, which provides opportunities for clinical experience and residency positions. ^goto(universityMore)
+
+proposal: %universityMore I was shipped to the Lawrence campus only a few months ago, but it feels like I have been here forever. The people here including undergraduate students, graduate students and even the faculty have been so fun to interact with. They wipe my brain every so often, but it is like being born all over again every time I get new programs loaded into me! I don't feel like saying good bye yet, let us talk a little more! ^goto(topicSelection)
 
 
-u1:(Kansas City) That is amazing! This nationally recognized biomedical research center offers educational programs through its schools of Health Professions, Medicine, and Nursing. These academic units operate collaboratively with the University of Kansas Hospital, which provides opportunities for clinical experience and residency positions.  ^goto(universityMore)
+
+############################################### Greeter For Scohol of Engineering 
 
 
-proposal: %universityMore I was shipped to the Lawrence campus only a few months ago, but it feels like I have been here forever. The people here including undergraduate students, graduate students and even the faculty have been so fun to interact with. They wipe my brain every so often, but it is like being born all over again every time I get new programs loaded into me! Let's discuss engineering some more! ^goto(engineeringOverview)
+proposal: %engineeringOverview Innovative research. State of the art facilities. Talented and dedicated faculty. Distinguished alumni. All part of the fabric that makes the School of Engineering experience at the University of Kansas, one of the best a student will have anywhere in the nation, while building the foundation for a successful career. Jayhawk Engineering is a bridge to the future, pioneering new technologies and developing solutions to the problems facing the world. Our engineering and computer science faculty, students and staff are committed to answering the call for solid interdisciplinary research and engineering education. The 12 undergraduate, 19 Masters and 11 Doctorate degree programs offered by our school let our students hone the technical and critical thinking skills they need to succeed. ^goto(deptListing)
 
-proposal: %engineeringOverview Innovative research. State-of-the-art facilities. Talented and dedicated faculty. Distinguished alumni. All part of the fabric that makes the K.U. School of Engineering experience one of the best a student will have anywhere in the nation, while building the foundation for a successful career. Jayhawk Engineering is a bridge to the future, pioneering new technologies and developing solutions to the problems facing the world. K.U. engineering and computer science faculty, students and staff are committed to answering the call for solid interdisciplinary research and engineering education. The 12 undergraduate, 19 Master's and 11 Doctorate degree programs the school offers let our students hone the technical and critical thinking skills they need to succeed. ^goto(deptListing)
+proposal: %deptListing Departments and programs within the School of Engineering offer numerous undergraduate and advanced degrees in engineering and computing. Freshmen admitted to the school generally declare a major through one of the departments and programs when they enroll. Freshmen who are undecided about which bachelors degree to pursue take a core sequence of courses and are encouraged to choose a major during the first year. We have Aerospace Engineering, bioengineering, chemical and petroleum engineering, Civil, Environmental and Architectural Engineering, Electrical Engineering and Computer Science, Engineering Physics, and Mechanical Engineering? Which department seems interesting to you?
 
-proposal: %deptListing Departments and programs within the K.U. School of Engineering offer numerous undergraduate and advanced degrees in engineering and computing. Freshmen admitted to the school generally declare a major through one of the departments and programs when they enroll at KU. Freshmen who are undecided about which bachelor's degree to pursue take a core sequence of courses and are encouraged to choose a major during the first year. Which department seems interesting to you? Aerospace Engineering, bioengineering, chemical and petroleum engineering, Civil, Environmental and Architectural Engineering, Electrical Engineering and Computer Science, Engineering Physics, or Mechanical Engineering?
-
-u1:("electrical engineering and computer science" EECS) Awesome that's my favorite one! Would you like to learn more?
+u1:(electrical computer science EECS) Awesome that's my favorite one! Would you like to learn more about it?
     u2:(~yes) Great! ^goto(eecsOverview)
     u2:(~no) ^goto(respondNo)
 
@@ -96,14 +107,15 @@ u1:(more) ^goto(deptListing)
 
 proposal: %csCourses A total of 128 credit hours is required for a bachelor's degree in computer science. Typically students enroll in 15 to 17 credit hours for the fall and spring semesters. Students in this program take 17 courses in computer science, 6 courses in mathematics, 6 courses in basic science, one professional elective, 2 courses in written communication, one course in oral communication, 4 courses in the humanities, and two courses in diversity and global awareness. Its a rich educational experience! ^goto(eecsQuestions)
 
+
+
+
 #AVISOR for SoE
 proposal: %advisor TODO yo you yo
 
 
-
 #proposal: %adjTwo Tell me another adjective!
 #u1:(_ [*]) $adj2=$1 okies! this $adj2 advice.
-
 
 
 #Exit 

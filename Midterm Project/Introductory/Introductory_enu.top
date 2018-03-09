@@ -1,7 +1,6 @@
 topic: ~Introductory()
 language: enu
 
-
 # Defining needed concepts, keywords or sentences corresponding to a concept.
 concept:(yes) [yes "all right" sure "why not" ok certainly "very well" yep yea definitely amen]
 concept:(no) [no nope "don't want" "no way" never "not at all"]
@@ -49,23 +48,15 @@ u:(~how) ^startTag(myself) I'm fine, thank you. And you, ^goto(howAreYou)
 # Expressed by concept, user can be happy, sad or ask the robot to repeat the question.
 
 proposal: %howAreYou ^startTag(show) how are you today?
-u1:(~happy) ^start(animations/Stand/Gestures/Hey_1)That is wonderful. I'm glad you are doing well. ^goto(goodDay)
-u1:(~sad) ^start(animations/Stand/Gestures/No_3) Oh, I feel sorry for you. ^goto(badDay)
-u1: (game) okay ^goto(madLib)
+u1:(~happy) ^start(animations/Stand/Gestures/Hey_1)That is wonderful. In keeping with the tone of the wonderful day you are having, I would like to entertain you further! ^goto(topicSelection)
+u1:(~sad) ^start(animations/Stand/Gestures/No_3) Oh, I am sorry! I will try my best to cheer you up! ^goto(topicSelection)
 u1:(~repeat) ^start(animations/Stand/Gestures/Explain_3) I'll repeat for you. ^sameProposal
 
 
-proposal: %goodDay In keeping with the tone of the wonderful day you are having, I would like to entertain you further! Tell me, would you like to talk about the wonderful university where we are studying or just something random, perhaps a tv show? 
+proposal: %topicSelection Tell me, would you like to talk about the wonderful university where we are studying or just something random, perhaps a tv show? 
 u1:(~university) ^start(animations/Stand/Gestures/Enthusiastic_4) Yes, absolutely! ^goto(universityIntro)
-u1:(~tele) ^start(animations/Stand/Gestures/Enthusiastic_5) I spend most of my life in front of the tv, so we have a lot to talk about. ^goto(teleIntro)
 u1:(~repeat) ^start(animations/Stand/Gestures/Explain_3) I'll repeat for you. ^sameProposal
 
-
-
-proposal: %badDay I have a few tricks in my hat that can cheer you up. Tell me, would you like to talk about the wonderful university where we are studying or just something random, perhaps a tv show? 
-u1:(~university) ^start(animations/Stand/Gestures/Enthusiastic_4) That is wonderful. I'm glad you are doing well. ^goto(universityIntro)
-u1:(~tele) ^start(animations/Stand/Gestures/Enthusiastic_5) I spend most of my life in front of the tv, so we have a lot to talk about. ^goto(teleIntro)
-u1:(~repeat) ^start(animations/Stand/Gestures/Explain_3) I'll repeat for you. ^sameProposal
 
 
 #UNIVERSITY STUFF
@@ -97,7 +88,7 @@ u1:("computer engineering") Computer engineers combine expertise in software des
 proposal: %eecsQuestions What questions do you have?
 u1:("I don't have any" none no "I'm good") Alright ^goto(respondNone) 
 u1:(class classes course courses) Oh of course! ^goto(csCourses) 
-u1:("advise me" advice advise) I am an exellent advisor! ^goto(advisor)
+u1:("advise me" advice advise) I am an excellent advisor! ^goto(advisor)
 
 proposal: %respondNone OK, do you want to learn more about engineering or talk about something else?
 u1:(else) Sure! ^goto(howAreYou)
@@ -108,65 +99,13 @@ proposal: %csCourses A total of 128 credit hours is required for a bachelor's de
 #AVISOR for SoE
 proposal: %advisor TODO yo you yo
 
-#TELVEVISION STUFF
-proposal: %teleIntro My all time favorite tv shows are Friends and The Big Bang Theory. I sincerely hope you have seen these. Which one of these would you like to talk about?
-u1:(friends) Friends is the best TV show ever made in the history of television. If you disagree with me, we should stop talking like right now! Who is your favorite character?
-    u2:(phoebe) I really can't pick one character and say that it is the best character in the show. I loved them all. But gun to my head, I would say I loved Phoebe too. Just a little more than I loved everybody else. She is extremely sweet and innocent. She has seen so much pain in life, but still has a very positive attitude. Do you like her songs?
-        u3:(~yes) Me too! My favorite song was smelly cat! Smelly cat, smelly cat what are they feeding you? Smelly cat smelly cat its not your fault. ^goto(teleMore)
-        u3:(~no) Oh come on! How can you not like her songs? Remember smelly cat? Smelly cat, smelly cat what are they feeding you? Smelly cat smelly cat its not your fault. ^goto(teleMore) 
-    u2:(chandler) He is super funny! Can anybody be more sarcastic?  ^goto(teleMore)
-    u2:(_[rachel monica]) $1 is awesome! I honestly believe, the friendship Rachel and Monica share is phenomenal. They are the true definition of "best friends". ^goto(teleMore)
-    u2:(ross) Ross is amazing. He is such a sad person, how many times did he get married? twelve hundred? You can't help but feel sorry for him, yet he is so adorable! ^goto(teleMore)
-    u2:(joey) Joey is the best! I ordered Joey Special yesterday. Two pizzas!^goto(teleMore)
-
-u1:(big bang) I love that show!  Sheldon is my favorite character. He is so quirky and annoying but adorable and hilarious at the same time! Who is your favorite character?
-    u2:(sheldon) oh yay! He really is the best! I love his quote from the pilot where he doesn't let penny sit in his spot on the couch and then explains why it is the best spot. He goes - In the winter, that seat is close enough to the radiator to remain warm, and yet not so close as to cause perspiration. In the summer, it's directly in the path of a cross-breeze created by opening windows there and there. It faces the television at an angle that is neither direct, thus discouraging conversation, nor so far wide as to create a parallax distortion. I could go on, but I think I have made my point! ^goto(teleMore)
-    u2:(_[leonard penny howard raj amy bernadette]) $1 is pretty great, but no comaprison to sheldon! His logic is so crazy! I love his quote from the pilot where he doesn't let penny sit in his spot on the couch and then explains why it is the best spot. He goes - In the winter, that seat is close enough to the radiator to remain warm, and yet not so close as to cause perspiration. In the summer, it's directly in the path of a cross-breeze created by opening windows there and there. It faces the television at an angle that is neither direct, thus discouraging conversation, nor so far wide as to create a parallax distortion. I could go on, but I think I have made my point ^goto(teleMore)
-    
-u1:(~repeat) ^start(animations/Stand/Gestures/Explain_3) I'll repeat for you. ^sameProposal
 
 
-proposal: %teleMore I do watch a lot of tv, seems like you do too! Tell me, which one of the Big Bang Theory lead characters does not have a doctorate?
-u1:([howard penny]) Oh yay! You are right! Other than Friends and The Big Bang Theory, I also finished watching all of Game of Thrones recently, but let's not talk about that or we will be here all day ^goto(madLib)
-u1:(_[*]) oh come on! I thought you would know! Anyway, other than Friends and The Big Bang Theory, I also finished watching all of Game of Thrones recently, but let's not talk about that or we will be here all day ^goto(madLib) 
+#proposal: %adjTwo Tell me another adjective!
+#u1:(_ [*]) $adj2=$1 okies! this $adj2 advice.
 
 
 
-proposal: %madLib Okay, let's play a small fun game! All you need to know are a few basic constructs in English grammar. I am going to ask for a few words and then give you a madlib. I am not going to tell you what the topic of these madlibs is! It is more fun that way. Alright, tell me an adjective!
-u1:(_ [*]) $adj1=$1 cooliyo! ^goto(adjTwo)
-
-proposal: %adjTwo Tell me another adjective!
-u1:(_ [*]) $adj2=$1 okies! ^goto(adjThree)
-
-proposal: %adjThree Tell me one last adjective!
-u1:(_ [*]) $adj3=$1 perfect! ^goto(adverbOne)
-
-proposal: %adverbOne Okay, now give me an adverb!
-u1:(_ [*]) $adv1=$1 perfect! ^goto(nounOne)
-
-proposal: %nounOne Okay, give me a noun!
-u1:(_ [*]) $noun1=$1 perfect! ^goto(nounTwo)
-
-proposal: %nounTwo Give me another noun!
-u1:(_ [*]) $noun2=$1 perfect! ^goto(nounThree)
-
-proposal: %nounThree I need another noun...
-u1:(_ [*]) $noun3=$1 perfect! ^goto(nounFour)
-
-proposal: %nounFour One more noun please!
-u1:(_ [*]) $noun4=$1 perfect! ^goto(nounFive)
-
-proposal: %nounFive We are almost done with nouns, give me one more noun though!
-u1:(_ [*]) $noun5=$1 perfect! ^goto(nounSix)
-
-proposal: %nounSix Okay, give me a last noun, promise! One last noun!
-u1:(_ [*]) $noun6=$1 perfect! ^goto(pluralNoun)
-
-proposal: %pluralNoun Okay, now finally, give me a PLURAL noun!
-u1:(_ [*]) ^start(animations/Stand/Gestures/IDontKnow_2) Good luck reading it! Driving a car can be fun if you follow this $adj1 advice: When approaching a $noun1 on the right, always blow your $noun2 Before making a $adj2 turn, always stick your $noun3 out of the window. Every 2000 miles, have your $noun4 inspected and your $noun5 checked. When approaching a school, watch out for $adj3 $1 Above all, drive $adv1 . The $noun6 you save may be your own! $onStopped=1
-
-
-# Exiting.
-# Answering to Goodbye and exiting the dialog box, stimulating the onStopped output slot
-u:(~bye) ~bye $onStopped=1
-
+#Exit 
+proposal: %lastProp It was wonderful talking to you. Good bye! $onStopped=1
+u:(~bye) It was wonderful talking to you. Good bye! $onStopped=1

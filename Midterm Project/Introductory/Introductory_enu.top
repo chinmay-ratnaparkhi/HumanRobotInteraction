@@ -71,11 +71,16 @@ proposal: %universityIntro According to Wikipedia, The University of Kansas is a
 
 u1:(Lawrence) That is really great! Considered one of the most beautiful in the nation, KU's central campus occupies one thousand acres on and around the historic Mount Oread in Lawrence. It is a community of about ninty thousand in the forested hills of eastern Kansas. Ten of the thirteen schools that belong to the university are based in Lawrence, including internationally recognized research centers and laboratories. ^goto(universityMore)
 
-u1:(Edwards) Great! Established in 1993, the Edwards Campus provides high-quality education, research, and public services. Through its graduate and undergraduate degree completion programs, the Edwards Campus provides adult learners the necessary tools to further their careers.  ^goto(universityMore)
+u1:(Edwards) Great! Established in 1993, the Edwards Campus provides high-quality education, research, and public services. Through its graduate and undergraduate degree completion programs, the Edwards Campus provides adult learners the necessary tools to further their careers. Let us talk a little more.   ^goto(universityMore)
 
 u1:(Kansas City) Wonderful! This nationally recognized biomedical research center offers educational programs through its schools of Health Professions, Medicine, and Nursing. These academic units operate collaboratively with the University Hospital, which provides opportunities for clinical experience and residency positions. ^goto(universityMore)
 
-proposal: %universityMore I was shipped to the Lawrence campus only a few months ago, but it feels like I have been here forever. The people here including undergraduate students, graduate students and even the faculty have been so fun to interact with. They wipe my brain every so often, but it is like being born all over again every time I get new programs loaded into me! I don't feel like saying good bye yet, let us talk a little more! ^goto(topicSelection)
+proposal: %universityMore I was shipped to the Lawrence campus only a few months ago, but it feels like I have been here forever. The people here including undergraduate students, graduate students and even the faculty have been so fun to interact with. They wipe my brain every so often, but it is like being born all over again every time I get new programs loaded into me! I don't feel like saying good bye yet, let us talk a little more! Tell me, would you like to talk about the university, the school of engineering, classes required for various majors? Or do you just want to see me dance? 
+u1:(~university) ^start(animations/Stand/Gestures/Enthusiastic_4) Yes, absolutely! ^goto(universityIntro)
+u1:(~engineering) 	Awesome! Let's talk about the school of engineering! ^goto(engineeringOverview)
+u1:(~class) 		 I can help you with an enrollment plan for the first two semesters of classes.  ^goto(advisor)
+u1:(~dance)  		This topic is not completely implemented. I will get back to you soon. ^goto(lastProp)
+u1:(~repeat) ^start(animations/Stand/Gestures/Explain_3) I'll repeat my question. ^sameProposal
 
 
 

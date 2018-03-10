@@ -7,7 +7,9 @@
     <Dialogs>
         <Dialog name="Introductory" src="Introductory/Introductory.dlg" />
     </Dialogs>
-    <Resources />
+    <Resources>
+        <File name="robotDance" src="robotDance.mp3" />
+    </Resources>
     <Topics>
         <Topic name="Introductory_enu" src="Introductory/Introductory_enu.top" topicName="Introductory" language="en_US" />
     </Topics>

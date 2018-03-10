@@ -36,7 +36,7 @@ concept:(self) [us "one another" we myself "each other" "get to know"]
 # If User expresses a word or a sentence found in the concept "hello",
 # the robot starts Hey_1 animation, answers a random value defined in concept "hello"
 # and waits for the end of the animation before going to the label how. Label is expressed this way: %howAreYou
-u:(~hello) ^start(animations/Stand/Gestures/Hey_1) ~hello ^wait(animations/Stand/Gestures/Hey_1) ^goto(howAreYou)
+u:(~hello) ~hello ^goto(howAreYou)
 
 
 # Tag animation.
@@ -61,7 +61,7 @@ proposal: %topicSelection I can talk to you about the school of engineering at t
 u1:(~university) ^start(animations/Stand/Gestures/Enthusiastic_4) Yes, absolutely! ^goto(universityIntro)
 u1:(~engineering) 	Awesome! Let's talk about the school of engineering! ^goto(engineeringOverview)
 u1:(~class) 		 I can help you with an enrollment plan for the first two semesters of classes.  ^goto(advisor)
-u1:(~dance)  		This topic is not completely implemented. I will get back to you soon. ^goto(lastProp)
+u1:(~dance)  		Here it comes! $danceInit=1
 u1:(~repeat) ^start(animations/Stand/Gestures/Explain_3) I'll repeat my question. ^sameProposal
 
 

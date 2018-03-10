@@ -18,6 +18,9 @@ concept:(class) [class classes major advice advising advisor fall spring]
 concept:(dance) [dance dancer bollywood music entertain entertainment]
 concept:(self) [us "one another" we myself "each other" "get to know"]
 
+
+u:(come here) Wruff! Wruff! $walker=1
+
 ## YELL when someone touches!
 #u:(e:FrontTactilTouched) ^start(animations/Stand/Gestures/No_8) I am expensive and delicate! Please don't ManHandle me! ^wait(animations/Stand/Gestures/No_8)
 #u:(e:HandLeftBackTouched) ^start(animations/Stand/Gestures/No_8) I am expensive and delicate! Please don't ManHandle me! ^wait(animations/Stand/Gestures/No_8)
@@ -31,6 +34,10 @@ concept:(self) [us "one another" we myself "each other" "get to know"]
 #u:(e:RearTactilTouched)^start(animations/Stand/Gestures/No_8) I am expensive and delicate! Please don't ManHandle me! ^wait(animations/Stand/Gestures/No_8)
 #u:(e:robotHasFallen) ^start(animations/Stand/Gestures/No_8) I am expensive and delicate! Please don't ManHandle me! ^wait(animations/Stand/Gestures/No_8)
 
+
+u:(e:LeftBumperPressed) I'll help you with your advising issues ^goto(advisor)
+u:(e:RightBumperPressed) Lets talk about the School of Engineering at The University of Kansas ^goto(engineeringOverview)
+u:(e:FrontTactilTouched) $danceInit=1
 
 # Start/Wait animation, Goto.
 # If User expresses a word or a sentence found in the concept "hello",
@@ -59,9 +66,9 @@ u1:(~repeat) ^start(animations/Stand/Gestures/Explain_3) I'll repeat for you. ^s
 # or just entertainment (dancer) 
 proposal: %topicSelection I can talk to you about the school of engineering at the university of Kansas, advice you on which classes you should take in the first year for various majors offered by the school of engineering or entertain you with a bollywood dance! Tell me, would you like to talk about the university, the school of engineering, classes required for various majors? Or do you just want to see me dance? 
 u1:(~university) ^start(animations/Stand/Gestures/Enthusiastic_4) Yes, absolutely! ^goto(universityIntro)
-u1:(~engineering) 	Awesome! Let's talk about the school of engineering! ^goto(engineeringOverview)
-u1:(~class) 		 I can help you with an enrollment plan for the first two semesters of classes.  ^goto(advisor)
-u1:(~dance)  		Here it comes! $danceInit=1
+u1:(~engineering)     Awesome! Let's talk about the school of engineering! ^goto(engineeringOverview)
+u1:(~class)          I can help you with an enrollment plan for the first two semesters of classes.  ^goto(advisor)
+u1:(~dance)          Here it comes! $danceInit=1
 u1:(~repeat) ^start(animations/Stand/Gestures/Explain_3) I'll repeat my question. ^sameProposal
 
 
@@ -77,9 +84,9 @@ u1:(Kansas City) Wonderful! This nationally recognized biomedical research cente
 
 proposal: %universityMore I was shipped to the Lawrence campus only a few months ago, but it feels like I have been here forever. The people here including undergraduate students, graduate students and even the faculty have been so fun to interact with. They wipe my brain every so often, but it is like being born all over again every time I get new programs loaded into me! I don't feel like saying good bye yet, let us talk a little more! Tell me, would you like to talk about the university, the school of engineering, classes required for various majors? Or do you just want to see me dance? 
 u1:(~university) ^start(animations/Stand/Gestures/Enthusiastic_4) Yes, absolutely! ^goto(universityIntro)
-u1:(~engineering) 	Awesome! Let's talk about the school of engineering! ^goto(engineeringOverview)
-u1:(~class) 		 I can help you with an enrollment plan for the first two semesters of classes.  ^goto(advisor)
-u1:(~dance)  		This topic is not completely implemented. I will get back to you soon. ^goto(lastProp)
+u1:(~engineering)     Awesome! Let's talk about the school of engineering! ^goto(engineeringOverview)
+u1:(~class)          I can help you with an enrollment plan for the first two semesters of classes.  ^goto(advisor)
+u1:(~dance)          This topic is not completely implemented. I will get back to you soon. ^goto(lastProp)
 u1:(~repeat) ^start(animations/Stand/Gestures/Explain_3) I'll repeat my question. ^sameProposal
 
 
@@ -122,68 +129,68 @@ proposal: %advisor Tell me, which major are you interested in learning about, El
 
 # Electrical Engineering
 u1:(electrical) Excellent choice!  
-	
-	In the first semester, all students in the department must take the New Student Seminar E.E.C.S. one O one.
-	You also need to take calculus one, which is math one twenty five and physics one which includes a lecture course and a lab course,  physics two ten and physics two sixteen respectively. Freshman year students are also required to take english classes. You should start with English one O one. Along with these Math, physics and English classes you will also have to take E.E.C.S. one sixty eight which is introduction to programming.
+    
+    In the first semester, all students in the department must take the New Student Seminar E.E.C.S. one O one.
+    You also need to take calculus one, which is math one twenty five and physics one which includes a lecture course and a lab course,  physics two ten and physics two sixteen respectively. Freshman year students are also required to take english classes. You should start with English one O one. Along with these Math, physics and English classes you will also have to take E.E.C.S. one sixty eight which is introduction to programming.
 
-	E.E.C.S. one O one is a one credit seminar, math one twenty five, E.E.C.S. one sixty eight and physics are four credits each and English one O one is three credits which brings the total to sixteen credit hours for the first semester.
+    E.E.C.S. one O one is a one credit seminar, math one twenty five, E.E.C.S. one sixty eight and physics are four credits each and English one O one is three credits which brings the total to sixteen credit hours for the first semester.
 
-	In the second semester, you  need to take calculus two, which is math one twenty six and physics two which includes a lecture course and a lab course, physics two twelve and physics two thirty six respectively. You will also take E.E.C.S. one fourty which is introduction to digital logic design. 
+    In the second semester, you  need to take calculus two, which is math one twenty six and physics two which includes a lecture course and a lab course, physics two twelve and physics two thirty six respectively. You will also take E.E.C.S. one fourty which is introduction to digital logic design. 
 
-	Students in electrical engineering major need to take chemistry classes. I would suggest taking chemistry one fifty which is an introductory course in chemistry for engineering students.
+    Students in electrical engineering major need to take chemistry classes. I would suggest taking chemistry one fifty which is an introductory course in chemistry for engineering students.
 
-	Math one twenty six, physics and digital logic design are all four credit classes. Chemistry for engineers is a five credit course, which brings the total for the second semester up to seventeen credit hours.
+    Math one twenty six, physics and digital logic design are all four credit classes. Chemistry for engineers is a five credit course, which brings the total for the second semester up to seventeen credit hours.
 
-	Would you like to talk about another major?
-	u2:(~yes) Excellent! ^sameProposal
-	u2:(~no) Alright! $onStopped=1
+    Would you like to talk about another major?
+    u2:(~yes) Excellent! ^sameProposal
+    u2:(~no) Alright! $onStopped=1
 
 # Computer Engineering
 u1:(computer engineering) Alright!
-	In the first semester, all students in the department must take the New Student Seminar E.E.C.S. one O one.
-	You also need to take calculus one, which is math one twenty five and physics one which includes a lecture course and a lab course,  physics two ten and physics two sixteen respectively. Freshman year students are also required to take english classes. You should start with English one O one. Along with these Math, physics and English classes you will also have to take E.E.C.S. one sixty eight which is introduction to programming.
+    In the first semester, all students in the department must take the New Student Seminar E.E.C.S. one O one.
+    You also need to take calculus one, which is math one twenty five and physics one which includes a lecture course and a lab course,  physics two ten and physics two sixteen respectively. Freshman year students are also required to take english classes. You should start with English one O one. Along with these Math, physics and English classes you will also have to take E.E.C.S. one sixty eight which is introduction to programming.
 
-	E.E.C.S. one O one is a one credit seminar, math one twenty five, E.E.C.S. one sixty eight and physics are four credits each and English one O one is three credits which brings the total to sixteen credit hours for the first semester.
+    E.E.C.S. one O one is a one credit seminar, math one twenty five, E.E.C.S. one sixty eight and physics are four credits each and English one O one is three credits which brings the total to sixteen credit hours for the first semester.
 
-	In the second semester, you  need to take calculus two, which is math one twenty six and physics two which includes a lecture course and a lab course, physics two twelve and physics two thirty six respectively. Aside from these you will have advanced English which is English one O two. You will also take E.E.C.S. one fourty which is introduction to digital logic design. 
+    In the second semester, you  need to take calculus two, which is math one twenty six and physics two which includes a lecture course and a lab course, physics two twelve and physics two thirty six respectively. Aside from these you will have advanced English which is English one O two. You will also take E.E.C.S. one fourty which is introduction to digital logic design. 
 
-	Math one twenty six, physics and digital logic design are all four credit classes. English one O two is a three credit course, which brings the total for the second semester up to fifteen credit hours. 
+    Math one twenty six, physics and digital logic design are all four credit classes. English one O two is a three credit course, which brings the total for the second semester up to fifteen credit hours. 
 
-	Would you like to talk about another major?
-	u2:(~yes) Excellent! ^sameProposal
-	u2:(~no) Alright! $onStopped=1
+    Would you like to talk about another major?
+    u2:(~yes) Excellent! ^sameProposal
+    u2:(~no) Alright! $onStopped=1
 
 # Information Technology
 u1:(information technology I.T.) Sweet!  
 
-	In the first semester, all students in the department must take the New Student Seminar E.E.C.S. one O one.
-	You will take composition which is english one twenty one, general psychology which is psychology one thirty and S. P. D. one twenty one which is public speaking. You will also have to enroll in math one seventy one which is introduction to advanced algebra and C. S. one thirty four which is fundamentals of programming.
+    In the first semester, all students in the department must take the New Student Seminar E.E.C.S. one O one.
+    You will take composition which is english one twenty one, general psychology which is psychology one thirty and S. P. D. one twenty one which is public speaking. You will also have to enroll in math one seventy one which is introduction to advanced algebra and C. S. one thirty four which is fundamentals of programming.
 
-	The english, psychology, algebra and public speaking classes are three credits each. The programming class adds four credits. Which brings the total up to sixteen credit hours for the first semester.
+    The english, psychology, algebra and public speaking classes are three credits each. The programming class adds four credits. Which brings the total up to sixteen credit hours for the first semester.
 
-	In the second semester you will take composition two which is english one twenty two. You will be required to take biology one thirty five which is a laboratory course in biology, along with accounting one twenty one and two computer science courses C. S. twoo hundred which is fundamentals of algorithm and C. I. S. two O four which is introduction to scripting. 
+    In the second semester you will take composition two which is english one twenty two. You will be required to take biology one thirty five which is a laboratory course in biology, along with accounting one twenty one and two computer science courses C. S. twoo hundred which is fundamentals of algorithm and C. I. S. two O four which is introduction to scripting. 
 
-	English, accounting and scripting classes are three credit hours each. The algorithms and biology classes are four credits each. This brings the total up to seventeen credit hours for the second semester.
+    English, accounting and scripting classes are three credit hours each. The algorithms and biology classes are four credits each. This brings the total up to seventeen credit hours for the second semester.
 
-	Would you like to talk about another major?
-	u2:(~yes) Excellent! ^sameProposal
-	u2:(~no) Alright! $onStopped=1
+    Would you like to talk about another major?
+    u2:(~yes) Excellent! ^sameProposal
+    u2:(~no) Alright! $onStopped=1
 
 # Computer Science
 u1:(science) Excellent choice, that was my major in college too!
 
-	In the first semester, all students in the department must take the New Student Seminar E.E.C.S. one O one.
-	You also need to take calculus one, which is math one twenty five and physics one which includes a lecture course and a lab course,  physics two ten and physics two sixteen respectively. Freshman year students are also required to take english classes. You should start with English one O one. Along with these Math, physics and English classes you will also have to take E.E.C.S. one sixty eight which is introduction to programming.
+    In the first semester, all students in the department must take the New Student Seminar E.E.C.S. one O one.
+    You also need to take calculus one, which is math one twenty five and physics one which includes a lecture course and a lab course,  physics two ten and physics two sixteen respectively. Freshman year students are also required to take english classes. You should start with English one O one. Along with these Math, physics and English classes you will also have to take E.E.C.S. one sixty eight which is introduction to programming.
 
-	E.E.C.S. one O one is a one credit seminar, math one twenty five, E.E.C.S. one sixty eight and physics are four credits each and English one O one is three credits which brings the total to sixteen credit hours for the first semester.
+    E.E.C.S. one O one is a one credit seminar, math one twenty five, E.E.C.S. one sixty eight and physics are four credits each and English one O one is three credits which brings the total to sixteen credit hours for the first semester.
 
-	In the second semester, you  need to take calculus two, which is math one twenty six and physics two which includes a lecture course and a lab course, physics two twelve and physics two thirty six respectively. Aside from these you will have advanced English which is English one O two. You will also take E.E.C.S. one fourty which is introduction to digital logic design. 
+    In the second semester, you  need to take calculus two, which is math one twenty six and physics two which includes a lecture course and a lab course, physics two twelve and physics two thirty six respectively. Aside from these you will have advanced English which is English one O two. You will also take E.E.C.S. one fourty which is introduction to digital logic design. 
 
-	Math one twenty six, physics and digital logic design are all four credit classes. English one O two is a three credit course, which brings the total for the second semester up to fifteen credit hours. 
+    Math one twenty six, physics and digital logic design are all four credit classes. English one O two is a three credit course, which brings the total for the second semester up to fifteen credit hours. 
 
-	Would you like to talk about another major?
-	u2:(~yes) Excellent! ^sameProposal
-	u2:(~no) Alright! $onStopped=1
+    Would you like to talk about another major?
+    u2:(~yes) Excellent! ^sameProposal
+    u2:(~no) Alright! $onStopped=1
 
 
 ############################################### End Advisor For Scohol of Engineering 

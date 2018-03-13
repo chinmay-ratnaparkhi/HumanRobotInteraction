@@ -31,6 +31,7 @@
                             <Output name="onCont" type="1" type_size="1" nature="2" inner="0" tooltip="" id="5" />
                             <Output name="danceInit" type="1" type_size="1" nature="2" inner="0" tooltip="" id="6" />
                             <Output name="walker" type="1" type_size="1" nature="2" inner="0" tooltip="" id="7" />
+                            <Output name="nonwalker" type="1" type_size="1" nature="2" inner="0" tooltip="" id="8" />
                         </Box>
                         <Box name="Set Language" id="2" localization="8" tooltip="Select the language you would like the robot to speak and understand. Any following call to&#x0A;ALSpeechRecognition (Speech Reco. box for instance) or ALTextToSpeech (Say box&#x0A;for instance) will use this language." x="183" y="109">
                             <bitmap>media/images/box/interaction/say.png</bitmap>
@@ -1764,6 +1765,7 @@ class MyClass(GeneratedClass):
                         <Link inputowner="9" indexofinput="2" outputowner="1" indexofoutput="7" />
                         <Link inputowner="8" indexofinput="5" outputowner="9" indexofoutput="6" />
                         <Link inputowner="8" indexofinput="2" outputowner="9" indexofoutput="6" />
+                        <Link inputowner="9" indexofinput="3" outputowner="1" indexofoutput="8" />
                     </Diagram>
                 </BehaviorKeyframe>
             </BehaviorLayer>

@@ -21,6 +21,8 @@ concept:(self) [us "one another" we myself "each other" "get to know"]
 
 u:(come here) Wruff! Wruff! $walker=1
 
+u:(stop walking) Wruff! Wruff! $nonwalker=1
+
 ## YELL when someone touches!
 #u:(e:FrontTactilTouched) ^start(animations/Stand/Gestures/No_8) I am expensive and delicate! Please don't ManHandle me! ^wait(animations/Stand/Gestures/No_8)
 #u:(e:HandLeftBackTouched) ^start(animations/Stand/Gestures/No_8) I am expensive and delicate! Please don't ManHandle me! ^wait(animations/Stand/Gestures/No_8)
@@ -43,20 +45,24 @@ u:(e:FrontTactilTouched) $danceInit=1
 # If User expresses a word or a sentence found in the concept "hello",
 # the robot starts Hey_1 animation, answers a random value defined in concept "hello"
 # and waits for the end of the animation before going to the label how. Label is expressed this way: %howAreYou
-u:(~hello) ~hello ^goto(howAreYou)
+u:(~hello) ~hello ^goto(nameTaker)
+
+
+proposal: %nameTaker And, What is your name?
+u1:(_ [*]) $name=$1 Nice to meet you $name . I am N A O ^goto(howAreYou)
 
 
 # Tag animation.
 # If User asks how the robot feels, it starts a random animation being tagged "myself",
 # answers and go to the label %howAreYou
-u:(~how) ^startTag(myself) I'm fine, thank you. How about you? ^goto(howAreYou)
+u:(~how) ^startTag(myself) I'm fine, thank you. How about you, $name?  ^goto(howAreYou)
 
 
 # The robot asks how the user feels. 3 kind of answers are expected
 # Expressed by concept, user can be happy, sad or ask the robot to repeat the question.
 proposal: %howAreYou ^startTag(show) How are you doing today?
 u1:(~happy) ^start(animations/Stand/Gestures/Hey_1)That is wonderful. In keeping with the tone of the wonderful day you are having, I would like to entertain you further! ^goto(topicSelection)
-u1:(~sad) ^start(animations/Stand/Gestures/No_3) Oh, I am sorry! I will try my best to cheer you up! ^goto(topicSelection)
+u1:(~sad) ^start(animations/Stand/Gestures/No_3) Oh, I am sorry! I will try my best to cheer you up $name ! ^goto(topicSelection)
 u1:(~repeat) ^start(animations/Stand/Gestures/Explain_3) I'll repeat for you. ^sameProposal
 
 
@@ -64,7 +70,7 @@ u1:(~repeat) ^start(animations/Stand/Gestures/Explain_3) I'll repeat for you. ^s
 # Pick a role for the robot. Based on a simple question the robot decides whether the user
 # wants university/department overview (greeter), specific acedemic details for engineering majors (advisor)
 # or just entertainment (dancer) 
-proposal: %topicSelection I can talk to you about the school of engineering at the university of Kansas, advice you on which classes you should take in the first year for various majors offered by the school of engineering or entertain you with a bollywood dance! Tell me, would you like to talk about the university, the school of engineering, classes required for various majors? Or do you just want to see me dance? 
+proposal: %topicSelection I can talk to you about the school of engineering at the university of Kansas, advice you on which classes you should take in the first year for various majors offered by the school of engineering or entertain you with a bollywood dance! $name Tell me, would you like to talk about the university, the school of engineering, classes required for various majors? Or do you just want to see me dance? 
 u1:(~university) ^start(animations/Stand/Gestures/Enthusiastic_4) Yes, absolutely! ^goto(universityIntro)
 u1:(~engineering)     Awesome! Let's talk about the school of engineering! ^goto(engineeringOverview)
 u1:(~class)          I can help you with an enrollment plan for the first two semesters of classes.  ^goto(advisor)
@@ -85,112 +91,84 @@ u1:(Kansas City) Wonderful! This nationally recognized biomedical research cente
 proposal: %universityMore I was shipped to the Lawrence campus only a few months ago, but it feels like I have been here forever. The people here including undergraduate students, graduate students and even the faculty have been so fun to interact with. They wipe my brain every so often, but it is like being born all over again every time I get new programs loaded into me! I don't feel like saying good bye yet, let us talk a little more! Tell me, would you like to talk about the university, the school of engineering, classes required for various majors? Or do you just want to see me dance? 
 u1:(~university) ^start(animations/Stand/Gestures/Enthusiastic_4) Yes, absolutely! ^goto(universityIntro)
 u1:(~engineering)     Awesome! Let's talk about the school of engineering! ^goto(engineeringOverview)
-u1:(~class)          I can help you with an enrollment plan for the first two semesters of classes.  ^goto(advisor)
+u1:(~class)          I can help you with an enrollment plan for the first two semesters of classes. ^goto(advisor)
 u1:(~dance)          This topic is not completely implemented. I will get back to you soon. ^goto(lastProp)
 u1:(~repeat) ^start(animations/Stand/Gestures/Explain_3) I'll repeat my question. ^sameProposal
 
+proposal: %questions What questions do you have?
+u1:("I don't have any" none no "I'm good" thank thanks) Alright ^goto(respondNone)
+u1:(advice advise courses course classes class) I can answer all your questions about coursework. I am an exellent advisor! ^goto(advisor)
 
-
-############################################### Greeter For Scohol of Engineering 
-
-
-proposal: %engineeringOverview Innovative research. State of the art facilities. Talented and dedicated faculty. Distinguished alumni. All part of the fabric that makes the School of Engineering experience at the University of Kansas, one of the best a student will have anywhere in the nation, while building the foundation for a successful career. Jayhawk Engineering is a bridge to the future, pioneering new technologies and developing solutions to the problems facing the world. Our engineering and computer science faculty, students and staff are committed to answering the call for solid interdisciplinary research and engineering education. The 12 undergraduate, 19 Masters and 11 Doctorate degree programs offered by our school let our students hone the technical and critical thinking skills they need to succeed. ^goto(deptListing)
-
-proposal: %deptListing Departments and programs within the School of Engineering offer numerous undergraduate and advanced degrees in engineering and computing. Freshmen admitted to the school generally declare a major through one of the departments and programs when they enroll. Freshmen who are undecided about which bachelors degree to pursue take a core sequence of courses and are encouraged to choose a major during the first year. We have Aerospace Engineering, bioengineering, chemical and petroleum engineering, Civil, Environmental and Architectural Engineering, Electrical Engineering and Computer Science, Engineering Physics, and Mechanical Engineering? Which department seems interesting to you?
-
-u1:(electrical computer science EECS) Awesome that's my favorite one! Would you like to learn more about it?
-    u2:(~yes) Great! ^goto(eecsOverview)
-    u2:(~no) ^goto(respondNo)
-
-proposal: %eecsOverview The technological advances that have made our modern society what it is today are due largely to the efforts of electrical engineers, computer engineers, computer scientists, and information technology specialists.  Among these advances are radio, television, telephones, wireless communications, cellular telephones, personal computers, workstations, mainframe computers, aircraft avionics, satellite electronics, automobile electronics, office machinery, medical electronic equipment, video games, electric power generation and distribution systems, telecommunications, computer networks including the Internet, home entertainment products, radar, defense electronics, artificial intelligence, and a wide range of software. The E.E.C.S. Department offers five Bachelor of Science degrees: Electrical Engineering, Computer Engineering, Computer Science, Interdisciplinary Computing, and Information Technology. This I.T. program is offered on the Edwards campus.  Each features a firm grounding in the fundamentals of mathematics, basic science, and computer science and/or engineering science, with advanced studies in the theory and design of systems of various kinds, as well as hands-on experience.  The E.E., C.o.E. and C.S. degrees are accredited; the I.C. and I.T. degrees are not yet eligible for accreditation. Which program is exciting to you?
-
-u1:("computer science") Computer scientists study the very nature of computing and information in order to advance the state of the art. They often specialize in software design and implementation through web development, interface design, mobile computing, and other areas. Computer scientists address fundamental computing problems, such as the efficient and secure collection of information. From medicine and business to video games and films, they are devising new ways to use computers. Integrating the theoretical aspects of computing with real-world applications offers an array of industry and research opportunities for computer scientists. Information technology professionals have a complex demanding job that requires a solid foundation in applied computing and management skills. In overseeing the I.T. infrastructure, they must select and integrate the appropriate hardware and software to meet the needs of the organization. They must define the requirements of the system and then design, deploy, integrate, and maintain system throughout its lifecycle. In addition to their vast computing knowledge, I.T. professionals must be able to communicate the impact of technology decisions to non-technical coworkers along with the latest policies and trends in I.T., ^goto(eecsQuestions) 
-
-u1:("computer engineering") Computer engineers combine expertise in software design and implementation with fundamental engineering skills - a highly valuable skill set. They design and maintain websites, networks, massive databases, and other applications, in the process developing and integrating new software and hardware. Computer engineers specialize in the development of computer systems designed to carry out specific functions in real-time, known as embedded systems, which operate airplanes, cell phones, vending machines, medical equipment, etc. Their vast computing knowledge and problem solving skills make computer engineers an invaluable asset to industry. As individuals and corporations become more dependent on computers, there is an abundant need for well-trained computer engineers. ^goto(eecsQuestions)
-
-proposal: %eecsQuestions What questions do you have?
-u1:("I don't have any" none no "I'm good") Alright ^goto(respondNone) 
-u1:(class classes course courses) Oh of course! ^goto(csCourses) 
-u1:("advise me" advice advise) I am an excellent advisor! ^goto(advisor)
-
-proposal: %respondNone OK, do you want to learn more about engineering or talk about something else?
+proposal: %respondNone Do you want to learn more about engineering or talk about something else?
 u1:(else) Sure! ^goto(howAreYou)
 u1:(more) ^goto(deptListing)
 
-proposal: %csCourses A total of 128 credit hours is required for a bachelor's degree in computer science. Typically students enroll in 15 to 17 credit hours for the fall and spring semesters. Students in this program take 17 courses in computer science, 6 courses in mathematics, 6 courses in basic science, one professional elective, 2 courses in written communication, one course in oral communication, 4 courses in the humanities, and two courses in diversity and global awareness. Its a rich educational experience! ^goto(eecsQuestions)
+proposal: %engineeringOverview Innovative research. State-of-the-art facilities. Talented and dedicated faculty. Distinguished alumni. All part of the fabric that makes the K.U. School of Engineering experience one of the best a student will have anywhere in the nation, while building the foundation for a successful career. Jayhawk Engineering is a bridge to the future, pioneering new technologies and developing solutions to the problems facing the world. K.U. engineering and computer science faculty, students and staff are committed to answering the call for solid interdisciplinary research and engineering education. The 12 undergraduate, 19 Master's and 11 Doctorate degree programs the school offers let our students hone the technical and critical thinking skills they need to succeed. ^goto(deptListing)
 
+proposal: %deptListing Departments and programs within the K.U. School of Engineering offer numerous undergraduate and advanced degrees in engineering and computing. Freshmen admitted to the school generally declare a major through one of the departments and programs when they enroll at KU. Freshmen who are undecided about which bachelor's degree to pursue take a core sequence of courses and are encouraged to choose a major during the first year. Which department seems interesting to you? Aerospace Engineering, bioengineering, chemical and petroleum engineering, Civil, Environmental and Architectural Engineering, Electrical Engineering and Computer Science, Engineering Physics, or Mechanical Engineering?
+u1:(elertric electrical computer) Awesome that's my favorite one! Would you like to learn more?
+    u2:(~yes) Great! ^goto(eecsOverview)
+    u2:(~no) ^goto(respondNone)
+u1:(aerospace aero space) Excellent choice! Would you like to learn more?
+    u2:(~yes) Great! ^goto(aeOverview)
+    u2:(~no) ^goto(respondNone)    
+u1:(civil environmental architectural) Ah, I see. Would you like to learn more?
+    u2:(~yes) Great! ^goto(ceaeOverview)
+    u2:(~no) ^goto(respondNone)    
+u1:(bio) Great! Undergraduates cannot earn a bachelor's degree in bioengineering, but would you like to learn more about earning a concentration in bioengineering?
+    u2:(~yes) Great! ^goto(bioEngOverview)
+    u2:(~no) ^goto(respondNone)    
+u1:(chemical petrolium) An excellent choice! Would you like to learn more?
+    u2:(~yes) Great! ^goto(cnpeOverview)
+    u2:(~no) ^goto(respondNone)    
+u1:(mechanical) Awesome! Would you like to learn more?
+    u2:(~yes) Great! ^goto(mechanicalOverview)
+    u2:(~no) ^goto(respondNone)
+u1:(physics) Cool! Would you like to learn more?
+    u2:(~yes) Great! ^goto(engineeringPhysOverview)
+    u2:(~no) ^goto(respondNone)
 
+# Engineering Physics
+proposal: %engineeringPhysOverview  
 
+Engineering physics graduates combine an extensive background in physics - the science that underlies much of modern technology with an engineering mindset. Their broad training and technical breadth provide a unique flexibility for careers. Students specialize in one of four design concentrations: Aerospace Systems; Chemical Systems; Digital Electronic Systems; or Electromechanical Control Systems. If you love science, math and engineering, this is the place for you. In our interdisciplinary program students prepare themselves for life in the 21st century. Students work with faculty from both the Department of Physics and Astronomy and the School of Engineering. They can have cutting edge research experiences that run the gamut from A to Z. ^goto(questions)
 
-############################################### Advisor For Scohol of Engineering 
-
-
-proposal: %advisor Tell me, which major are you interested in learning about, Electrical Engineering, Computer Engineering, Information technology or computer science?
-
-# Electrical Engineering
-u1:(electrical) Excellent choice!  
+# Mechanical Engineering overview
+proposal: %mechanicalOverview Mechanical engineers use principles of mechanics and energy to develop, design, manufacture and test tools, machines, motors, engines and other mechanical devices. They also work in areas such as medicine and medical devices, patent law, energy, business, forensic engineering and engineering sales. ^goto(questions)
     
-    In the first semester, all students in the department must take the New Student Seminar E.E.C.S. one O one.
-    You also need to take calculus one, which is math one twenty five and physics one which includes a lecture course and a lab course,  physics two ten and physics two sixteen respectively. Freshman year students are also required to take english classes. You should start with English one O one. Along with these Math, physics and English classes you will also have to take E.E.C.S. one sixty eight which is introduction to programming.
+#C&PE overview
+proposal: %cnpeOverview Ever wondered how to turn biomass into usable products? Or how to 3D print a body part with biomaterials? Or how to safely extract, store, and refine petroleum products? Or how to develop innovative catalytic processes? Perhaps you’re more interested in tissue regeneration, reaction kinetics, or controlled drug delivery? Well look no further than the Department of Chemical and Petroleum Engineering here at The University of Kansas! Our highly decorated faculty members have both the classroom and laboratory experience needed to prepare you for a bright and promising future career in either Chemical or Petroleum Engineering in these specific types of research groups plus many more. We offer degrees ranging from BS to PhD in both fields of interest. Are you interested in Chemical or Petroleum Engineering?
 
-    E.E.C.S. one O one is a one credit seminar, math one twenty five, E.E.C.S. one sixty eight and physics are four credits each and English one O one is three credits which brings the total to sixteen credit hours for the first semester.
+u1:(chemical) $major=chem Chemical engineers are concerned with the chemical processes that turn raw materials into valuable products. They design processes where materials undergo a chemical or physical change. Chemical engineers build a bridge between science and manufacturing, applying the principles of chemistry, physics, math, biology and engineering to solve problems involving the production or use of chemicals. Students pursuing a bachelor of science can choose from a variety of concentrations, including: biomedical; environmental; premedical; or petroleum. ^goto(questions)
 
-    In the second semester, you  need to take calculus two, which is math one twenty six and physics two which includes a lecture course and a lab course, physics two twelve and physics two thirty six respectively. You will also take E.E.C.S. one fourty which is introduction to digital logic design. 
+u1:(petroleum) $major=petrol Petroleum engineers are involved in the exploration and production of oil or natural gas. Once these resources are discovered, petroleum engineers work to understand the geologic formation and properties of the rock containing the reservoir, determine the drilling methods to be used, and monitor drilling and production operations. ^goto(questions)
+    
+#Bioengineering overview
+proposal: %bioEngOverview Undergraduate students can pursue a bioengineering-related concentration in several bachelor of science degree programs in the School of Engineering. Graduate students will find the program is highly interdisciplinary and collaborative. Many students work closely with faculty at the KU School of Medicine. Students pursue one of six tracks: Bioimaging, bioinformatics, Biomaterials and Tissue Engineering; Biomechanics and Neural Engineering; Biomedical Product Design and Development; and Biomolecular Engineering. They can also pursue an M.D. slash Ph.D. option. ^goto(questions)
 
-    Students in electrical engineering major need to take chemistry classes. I would suggest taking chemistry one fifty which is an introductory course in chemistry for engineering students.
 
-    Math one twenty six, physics and digital logic design are all four credit classes. Chemistry for engineers is a five credit course, which brings the total for the second semester up to seventeen credit hours.
+#CEAE overview
+proposal: %ceaeOverview Engineers are responsible for designing much of the human environment we use every day. Nowhere is that more apparent than in the fields of civil engineering, environmental engineering, and architectural engineering. Roads, bridges, buildings, water resources, air quality and more. These all play an increasingly important role in our lives. Are you interested in civil, or architectural engineering?
 
-    Would you like to talk about another major?
-    u2:(~yes) Excellent! ^sameProposal
-    u2:(~no) Alright! $onStopped=1
+u1:(architectural) Architectural engineering is the engineering discipline concerned with the planning, analysis, design, construction, and operation of engineered systems for commercial, industrial, institutional, and large residential facilities. Engineered systems include electric power, communications, and control; lighting and acoustics; heating, ventilating, and air conditioning; fire and life safety; structural systems; and green buildings and sustainability. The Architectural Engineering Bachelor of Science program is accredited by the Engineering Accreditation Commission of A.BET. ^goto(questions)
 
-# Computer Engineering
-u1:(computer engineering) Alright!
-    In the first semester, all students in the department must take the New Student Seminar E.E.C.S. one O one.
-    You also need to take calculus one, which is math one twenty five and physics one which includes a lecture course and a lab course,  physics two ten and physics two sixteen respectively. Freshman year students are also required to take english classes. You should start with English one O one. Along with these Math, physics and English classes you will also have to take E.E.C.S. one sixty eight which is introduction to programming.
+u1:(civi) Civil engineering, the oldest and broadest of the divisions of engineering, implements a range of public and private projects for improving society’s physical infrastructure and the environment. The civil engineer integrates scientific principles with engineering experience to plan, design, and construct networks of highways and railroads, airports, bridges and dams, environmental pollution control systems, industrial structures, water purification and distribution systems, and urban transportation systems that maintain, protect, and enhance the quality of life. Civil engineers are trained to consider the social effects as well as the physical and environmental factors that constrain the planning, design, construction, and operation of their projects. Environmental engineering, a technical specialization with its origins in civil engineering, is a growing discipline dedicated to the protection of the environment. The undergraduate program gives students the theoretical background, instruction in engineering application of scientific principles, and professional attitude to serve the public. It typically leads to entry-level positions or to graduate work in technical specialties, business administration, or other professions. ^goto(questions)
 
-    E.E.C.S. one O one is a one credit seminar, math one twenty five, E.E.C.S. one sixty eight and physics are four credits each and English one O one is three credits which brings the total to sixteen credit hours for the first semester.
+#AE overview
+proposal: %aeOverview Welcome to Aerospace Engineering at the University of Kansas. We are a tight-knit community for outstanding students, educators and researchers shaping the next generation of aerospace systems. Our proud history in aerospace education and research began with our first class of Bachelor’s students in 1944. Since then, the Department has achieved distinction in a number of areas. For example, K.U. is one of the best in the world in aircraft, engine and spacecraft design education, winning numerous A.I.A.A. and international design competitions,including three this year!. K.U. research teams support airborne remote sensing from manned and unmanned aircraft, from north pole to south pole. K.U.’s Aerospace Short Courses have been taught to and well-received by working professionals all over the world for more than three decades. ^goto(questions)
 
-    In the second semester, you  need to take calculus two, which is math one twenty six and physics two which includes a lecture course and a lab course, physics two twelve and physics two thirty six respectively. Aside from these you will have advanced English which is English one O two. You will also take E.E.C.S. one fourty which is introduction to digital logic design. 
+#EECS overview
+proposal: %eecsOverview The technological advances that have made our modern society what it is today are due largely to the efforts of electrical engineers, computer engineers, computer scientists, and information technology specialists.  Among these advances are radio, television, telephones, wireless communications, cellular telephones, personal computers, workstations, mainframe computers, aircraft avionics, satellite electronics, automobile electronics, office machinery, medical electronic equipment, video games, electric power generation and distribution systems, telecommunications, computer networks including the Internet, home entertainment products, radar, defense electronics, artificial intelligence, and a wide range of software. The E.E.C.S. Department offers five Bachelor of Science degrees: Electrical Engineering, Computer Engineering, Computer Science, Interdisciplinary Computing, and Information Technology. This I.T. program is offered on the Edwards campus.  Each features a firm grounding in the fundamentals of mathematics, basic science, and computer science and/or engineering science, with advanced studies in the theory and design of systems of various kinds, as well as hands-on experience.  The E.E., C.o.E. and C.S. degrees are accredited; the I.C. and I.T. degrees are not yet eligible for accreditation. Which program is exciting to you?
 
-    Math one twenty six, physics and digital logic design are all four credit classes. English one O two is a three credit course, which brings the total for the second semester up to fifteen credit hours. 
+u1:("computer science") Computer scientists study the very nature of computing and information in order to advance the state of the art. They often specialize in software design and implementation through web development, interface design, mobile computing, and other areas. Computer scientists address fundamental computing problems, such as the efficient and secure collection of information. From medicine and business to video games and films, they are devising new ways to use computers. Integrating the theoretical aspects of computing with real-world applications offers an array of industry and research opportunities for computer scientists. Information technology professionals have a complex demanding job that requires a solid foundation in applied computing and management skills. In overseeing the I.T. infrastructure, they must select and integrate the appropriate hardware and software to meet the needs of the organization. They must define the requirements of the system and then design, deploy, integrate, and maintain system throughout its lifecycle. In addition to their vast computing knowledge, I.T. professionals must be able to communicate the impact of technology decisions to non-technical coworkers along with the latest policies and trends in I.T., ^goto(questions) 
 
-    Would you like to talk about another major?
-    u2:(~yes) Excellent! ^sameProposal
-    u2:(~no) Alright! $onStopped=1
+u1:("computer engineering") Computer engineers combine expertise in software design and implementation with fundamental engineering skills - a highly valuable skill set. They design and maintain websites, networks, massive databases, and other applications, in the process developing and integrating new software and hardware. Computer engineers specialize in the development of computer systems designed to carry out specific functions in real-time, known as embedded systems, which operate airplanes, cell phones, vending machines, medical equipment, etc. Their vast computing knowledge and problem solving skills make computer engineers an invaluable asset to industry. As individuals and corporations become more dependent on computers, there is an abundant need for well-trained computer engineers. ^goto(questions)
 
-# Information Technology
-u1:(information technology I.T.) Sweet!  
+u1:("electrical engineering") Electrical engineers design, test and manufacture electrical and electronic systems and devices. They collaborate on the development of hybrid vehicles, wireless communications, flight control systems, radar systems and numerous other innovations. Electrical engineers can specialize in power transmission, motor control and other facets of large electrical systems or in microprocessors and integrated circuits within small-scale electronic systems. Armed with technical knowledge and skills, electrical engineers have career opportunities in a variety of industries and research organizations.
 
-    In the first semester, all students in the department must take the New Student Seminar E.E.C.S. one O one.
-    You will take composition which is english one twenty one, general psychology which is psychology one thirty and S. P. D. one twenty one which is public speaking. You will also have to enroll in math one seventy one which is introduction to advanced algebra and C. S. one thirty four which is fundamentals of programming.
+u1:("Information Technology") Information Technology professionals combine specialized knowledge and practical know-how to plan and maintain computing infrastructure and assist users with various I.T. needs. By understanding I.T. needs within an organization, specialists can better tailor requirements. They design and deploy I.T. resources and manage them through their lifecycle with the goal of increased productivity and competitiveness. I.T. specialists integrate information assurance practices into all systems to ensure confidentiality, integrity and availability of information. On the hardware side, I.T. specialists design and install network infrastructure and build or upgrade computer systems. With software, they install and update software and applications, troubleshoot and repair malfunctioning systems, and build and maintain databases. They ensure that the information technologies, which every business and organization depend upon, operate safely and securely and at maximum performance and efficiency.
 
-    The english, psychology, algebra and public speaking classes are three credits each. The programming class adds four credits. Which brings the total up to sixteen credit hours for the first semester.
-
-    In the second semester you will take composition two which is english one twenty two. You will be required to take biology one thirty five which is a laboratory course in biology, along with accounting one twenty one and two computer science courses C. S. twoo hundred which is fundamentals of algorithm and C. I. S. two O four which is introduction to scripting. 
-
-    English, accounting and scripting classes are three credit hours each. The algorithms and biology classes are four credits each. This brings the total up to seventeen credit hours for the second semester.
-
-    Would you like to talk about another major?
-    u2:(~yes) Excellent! ^sameProposal
-    u2:(~no) Alright! $onStopped=1
-
-# Computer Science
-u1:(science) Excellent choice, that was my major in college too!
-
-    In the first semester, all students in the department must take the New Student Seminar E.E.C.S. one O one.
-    You also need to take calculus one, which is math one twenty five and physics one which includes a lecture course and a lab course,  physics two ten and physics two sixteen respectively. Freshman year students are also required to take english classes. You should start with English one O one. Along with these Math, physics and English classes you will also have to take E.E.C.S. one sixty eight which is introduction to programming.
-
-    E.E.C.S. one O one is a one credit seminar, math one twenty five, E.E.C.S. one sixty eight and physics are four credits each and English one O one is three credits which brings the total to sixteen credit hours for the first semester.
-
-    In the second semester, you  need to take calculus two, which is math one twenty six and physics two which includes a lecture course and a lab course, physics two twelve and physics two thirty six respectively. Aside from these you will have advanced English which is English one O two. You will also take E.E.C.S. one fourty which is introduction to digital logic design. 
-
-    Math one twenty six, physics and digital logic design are all four credit classes. English one O two is a three credit course, which brings the total for the second semester up to fifteen credit hours. 
-
-    Would you like to talk about another major?
-    u2:(~yes) Excellent! ^sameProposal
-    u2:(~no) Alright! $onStopped=1
+proposal: %csCourses A total of 128 credit hours is required for a bachelor's degree in computer science. Typically students enroll in 15 to 17 credit hours for the fall and spring semesters. Students in this program take 17 courses in computer science, 6 courses in mathematics, 6 courses in basic science, one professional elective, 2 courses in written communication, one course in oral communication, 4 courses in the humanities, and two courses in diversity and global awareness. Its a rich educational experience! ^goto(questions)
 
 
 ############################################### End Advisor For Scohol of Engineering 

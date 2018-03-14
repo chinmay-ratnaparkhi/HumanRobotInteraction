@@ -96,16 +96,16 @@ u1:(~dance)          This topic is not completely implemented. I will get back t
 u1:(~repeat) ^start(animations/Stand/Gestures/Explain_3) I'll repeat my question. ^sameProposal
 
 proposal: %questions What questions do you have?
-u1:("I don't have any" none no "I'm good" thank thanks) Alright ^goto(respondNone)
+u1:(none no thank thanks) Alright ^goto(respondNone)
 u1:(advice advise courses course classes class) I can answer all your questions about coursework. I am an exellent advisor! ^goto(advisor)
 
 proposal: %respondNone Do you want to learn more about engineering or talk about something else?
-u1:(else) Sure! ^goto(howAreYou)
+u1:("else") Sure! ^goto(howAreYou)
 u1:(more) ^goto(deptListing)
 
 proposal: %engineeringOverview Innovative research. State-of-the-art facilities. Talented and dedicated faculty. Distinguished alumni. All part of the fabric that makes the K.U. School of Engineering experience one of the best a student will have anywhere in the nation, while building the foundation for a successful career. Jayhawk Engineering is a bridge to the future, pioneering new technologies and developing solutions to the problems facing the world. K.U. engineering and computer science faculty, students and staff are committed to answering the call for solid interdisciplinary research and engineering education. The 12 undergraduate, 19 Master's and 11 Doctorate degree programs the school offers let our students hone the technical and critical thinking skills they need to succeed. ^goto(deptListing)
 
-proposal: %deptListing Departments and programs within the K.U. School of Engineering offer numerous undergraduate and advanced degrees in engineering and computing. Freshmen admitted to the school generally declare a major through one of the departments and programs when they enroll at KU. Freshmen who are undecided about which bachelor's degree to pursue take a core sequence of courses and are encouraged to choose a major during the first year. Which department seems interesting to you? Aerospace Engineering, bioengineering, chemical and petroleum engineering, Civil, Environmental and Architectural Engineering, Electrical Engineering and Computer Science, Engineering Physics, or Mechanical Engineering?
+proposal: %deptListing Departments and programs within the K.U. School of Engineering offer numerous undergraduate and advanced degrees in engineering and computing. Freshmen admitted to the school generally declare a major through one of the departments and programs when they enroll at K.U. Freshmen who are undecided about which bachelor's degree to pursue take a core sequence of courses and are encouraged to choose a major during the first year. Which department seems interesting to you? Aerospace Engineering, bioengineering, chemical and petroleum engineering, Civil, Environmental and Architectural Engineering, Electrical Engineering and Computer Science, Engineering Physics, or Mechanical Engineering?
 u1:(elertric electrical computer) Awesome that's my favorite one! Would you like to learn more?
     u2:(~yes) Great! ^goto(eecsOverview)
     u2:(~no) ^goto(respondNone)
